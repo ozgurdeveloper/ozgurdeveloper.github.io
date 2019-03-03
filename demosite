@@ -1,0 +1,367 @@
+
+
+<?php require_once("fonksiyon.php"); 
+$dugun= new dugun;
+
+try  { 
+ 
+$db = new PDO("mysql:host=localhost;dbname=dugun;charset=utf8", "root",""); 
+ 
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+ 
+} catch (PDOException $e) {
+ 
+die($e->getMessege());
+}
+
+?>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="title" content="<?php echo $dugun->metatitle; ?>" />
+<meta name="description" content="<?php echo $dugun->metadesc; ?>" />
+<meta name="keywords" content="<?php echo $dugun->metakey; ?>" />
+<meta name="author" content="<?php echo $dugun->metaaut; ?>" />
+<meta name="owner" content="<?php echo $dugun->metaown; ?>" />
+<meta name="copyright" content="<?php echo $dugun->metacopy; ?>" />
+
+	<!-- Bootstrap stil dosyası -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- işimize yarayacak diğer kütüphane css dosyalarımız -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/magnific-popup/magnific-popup.css" rel="stylesheet">
+  <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
+  <!-- bizim stil dosyamız -->
+  <link href="css/style.css" rel="stylesheet">
+
+	<!-- Kütüphaneler -->
+
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/jquery/jquery-migrate.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/superfish/hoverIntent.js"></script>
+  <script src="lib/superfish/superfish.min.js"></script>
+  <script src="lib/wow/wow.min.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="lib/magnific-popup/magnific-popup.min.js"></script>
+  <script src="lib/sticky/sticky.js"></script>
+  <script src="js/main.js"></script>
+  <script type="text/javascript" src="js/prototype.js"></script>
+<script type="text/javascript" src="js/scriptaculous.js?load=effects,builder"></script>
+<script type="text/javascript" src="js/lightbox.js"></script>
+<script>
+ $(document).ready(function(){
+$('#gonderbtn').click(function(){
+			$.ajax({
+				
+				type : "POST",
+				url:'islemler.php?islem=hesap',
+				data:$('#mailform').serialize(),
+				success: function(donen_veri) {
+				$('#mailform').trigger("reset");
+				$("#mesajsonuc").html(donen_veri);
+				$("#formtutucu").hide();
+				
+				
+			},
+				
+				
+				});
+		});
+		});
+
+</script>
+	<title> <?php echo $dugun->title; ?> </title>
+</head>
+<body>
+<!-- İnstagram telefon en üst yer  -->
+<div class="container clearfix">
+		
+			<div class="float-left text-info mt-3">
+				<i class="fa fa-phone"></i> <?php echo $dugun->telefon; ?>				
+			</div>
+			
+			<div class="float-right text-info mt-3">
+				<a href="" ><i class="fa fa-instagram "></i><?php echo $dugun->inst; ?></a>				
+			</div>
+			<div class="float-right mr-4 text-info mt-3">
+				<a href="" > <i class="fa fa-twitter"></i>	<?php echo $dugun->twit; ?></a>			
+			</div>
+			<div class="float-right mr-4 text-info mt-3">
+				<a href="" > <i class="fa fa-facebook"></i>	<?php echo $dugun->face; ?></a>		
+			</div>
+		
+	
+
+</div>
+<!-- üst isim  -->
+<div class="row">
+	
+	<div class="text-info mx-auto">
+		<div class="pull-left text-info " id="logo">
+			<h1><?php echo $dugun->isim; ?></h1>
+		</div>
+	</div>
+</div>
+<section id="anasayfa">
+<header id="header">
+<!-- menü -->
+	<div class="row">
+		<div class="mx-auto">
+
+			<nav id="nav-menu-container">
+			<ul class="nav-menu">
+				<li> <a href="#anasayfa"> Anasayfa</a></li>
+				<li> <a href="#resimler"> Salonumuz</a></li>
+				<li> <a href="#videolar"> Videolar</a></li>
+				<li> <a href="#menuler"> Menüler</a></li>
+				<li> <a href="#hizmetlerimiz"> Hizmetlerimiz</a></li>
+				<li> <a href="#hakkimizda"> Hakkimizda</a></li>
+				<li> <a href="#iletisim"> iletisim</a></li>
+				
+
+				
+			</ul>
+
+		</nav>
+		</div>
+</div>
+	
+</header>
+</section>
+<!-- İNTRO -->
+
+<section id="intro">
+
+
+<div class="intro-content">
+<h2><?php echo $dugun->slogan; ?></h2>
+
+
+</div>
+<div id="intro-carousel" class="owl-carousel">
+
+<?php echo $dugun->intro($db); ?>
+</div>
+
+
+
+
+</section>
+
+<!-- ana main -->
+<main id="main">
+<!-- hakkımızda -->
+<section id="hakkimizda" class="wow fadeInUp">
+
+<div class="container">
+
+		<?php echo $dugun->hakkimizda($db); ?>
+
+</div>
+
+
+
+
+</section>
+
+
+
+
+<!-- yorumlar -->
+<section id="yorumlar" class="wow fadeInUp">
+
+<div class="container">
+
+
+		<div class="section-header">
+        <h2>Müşteri Yorumları</h2>
+        </div>
+         
+        <?php echo $dugun->musteriyorum($db); ?>
+
+</div>
+
+
+
+<!-- Hizmetlerimiz -->
+</section>
+<section id="hizmetlerimiz" class="wow fadeInUp">
+
+<?php echo $dugun->hizmetler($db); ?>
+
+
+</section>
+
+<!-- resimler -->
+<section id="resimler">
+<div class="container">
+	<div class="section-header">
+        <h2>Düğün Salonumuzdan Kareler </h2>
+        
+   		 </div>
+   <div class="row">
+
+       
+ <?php echo $dugun->resimler($db); ?>
+    
+      
+   </div>  
+</div>
+</section>
+<!-- VİDEOLAR -->
+<section id="videolar">
+<div class="container mt-5 mb-5">
+
+        <div class="section-header">
+        <h2>Videolarımız</h2>
+        
+   		 </div>
+   <div class="row">
+ <?php echo $dugun->videolar($db); ?>
+    
+      
+   </div> 
+</div>
+
+</section>
+ <section id="menuler">
+<div class="row">
+	<div class="container">
+        <div class="section-header">
+        <h2>Menülerimiz</h2>
+        
+   		 </div>
+   		 </div>
+    <div class="row">
+      <?php echo $dugun->menuler($db); ?>
+      </div>
+    
+</div>
+</section>
+<!-- iletişim -->
+
+<section id="iletisim" class="wow fadeInUp">
+
+<div class="container">
+
+
+			<div class="section-header">
+        <h2>İletişim</h2>
+        <p><?php echo $dugun->iletisimicerik; ?> </p>
+   		 </div>
+         
+         <div class="row contact-info">
+         
+         <div class="col-md-4">
+         <div class="contact-address">
+         <i class="ion-ios-location-outline"></i>
+         <h3>Adresimiz</h3>
+         <address>
+<?php echo $dugun->adres; ?></address>
+         </div>
+         </div>
+         
+          <div class="col-md-4">
+         <div class="contact-phone">
+         <i class="ion-ios-telephone-outline"></i>
+         <h3>Telefon Numaramız</h3>
+         <p><a href="tel:+902121111111"> <?php echo $dugun->telefon; ?></a></p>
+         <p><a href="tel:+902121111111"> <?php echo $dugun->telefon2; ?></a></p>
+         </div>
+         </div>
+         
+          <div class="col-md-4">
+         <div class="contact-email">
+         <i class="ion-ios-email-outline"></i>
+         <h3>Mail</h3>
+         <p><a href="mailto:info@udemynakliyat.com"><?php echo $dugun->mailadres; ?></a></p>
+         </div>
+         </div>
+         
+         
+         
+</div>
+
+</div>
+
+<div class="container mb-4">
+<iframe src="<?php echo $dugun->harita; ?>" width="100%" height="380" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+</div>
+
+
+<div class="container">
+<div class="form">
+
+<div id="mesajsonuc"></div>
+<div id="mesajhata"></div>
+<div id="formtutucu">
+<form id="mailform">
+
+<div class="form-row">
+
+<div class="form-group col-md-6">
+<input type="text" name="isim" class="form-control" placeholder="Adınız" required />
+
+</div>
+
+<div class="form-group col-md-6">
+<input type="text" name="mail" class="form-control" placeholder="Mail Adresiniz" required />
+
+</div>
+</div>
+
+
+
+<div class="form-group">
+<input type="text" name="telefon" class="form-control" placeholder="Telefon Numaranız" required />
+</div>
+
+<div class="form-group">
+<input type="text" name="konu" class="form-control" placeholder="Mesaj Konusu" required />
+</div>
+
+<div class="form-group">
+<textarea class="form-control" name="mesaj" rows="5"></textarea>
+</div>
+
+
+
+<div class="text-center"><input type="button"  value="Gönder" id="gonderbtn" class="btn btn-info"/></div>
+
+</form>
+</div>
+
+</div>
+</div>
+</section>
+
+
+</main>
+
+<!-- footer -->
+
+<footer id="footer">
+
+<div class="container">
+<div class="copyright">
+<?php echo $dugun->metacopy; ?>
+</div>
+<div class="credits">
+
+</div>
+</div>
+</footer>
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+</body>
+</html>
